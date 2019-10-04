@@ -6,19 +6,31 @@
             </div>
             <form @submit.prevent="register()">
                 
-                <label>Name</label>
-                <input v-model="user.name" type="text" placeholder="name" class="form-control mb-4">
+                <div class="mb-4">
+                    <label>Name</label>
+                    <input v-model="user.name" type="text" placeholder="name" class="form-control">
+                    <div v-if="errors.name" class="error"> {{ errors.name[0] }} </div>
+                </div>
 
-                <label>Email</label>
-                <input v-model="user.email" type="text" placeholder="example@email.com" class="form-control mb-4">
+                <div class="mb-4">
+                    <label>Email</label>
+                    <input v-model="user.email" type="text" placeholder="example@email.com" class="form-control">
+                    <div v-if="errors.email" class="error"> {{ errors.email[0] }} </div>
+                </div>
 
-                <label>Password</label>
-                <input v-model="user.password" type="password" placeholder="********" class="form-control mb-4">
+                <div class="mb-4">
+                    <label>Password</label>
+                    <input v-model="user.password" type="password" placeholder="********" class="form-control">
+                    <div v-if="errors.password" class="error"> {{ errors.password[0] }} </div>
+                </div>
 
-                <label>Confirm Password</label>
-                <input v-model="user.passwordConfirm" type="password" placeholder="********" class="form-control">
+                <div class="mb-4">
+                    <label>Confirm Password</label>
+                    <input v-model="user.passwordConfirm" type="password" placeholder="********" class="form-control">
+                    <div v-if="passwordMatch" class="error"> {{ passwordMatch }} </div>
+                </div>
 
-                <div class="d-flex justify-content-end mt-3">
+                <div class="d-flex justify-content-end">
                     <button type="submit" class="btn">Register</button>
                 </div>
             </form>
@@ -35,20 +47,33 @@ export default {
                 email: '',
                 password: '',
                 passwordConfirm: ''
-            }
+            },
+            errors: [],
+            passwordMatch: ''
         }
     },
 
     methods: {
         register() {
-            console.log(this.user);
             axios.post(registerURL, this.user)
-                .then(response => {
+            .then(response => {
+                if(this.user.password === this.user.passwordConfirm) {
+                    this.errors = []
+                    this.passwordMatch = ''
                     this.$router.push('/login')
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+                }
+                else {
+                    this.passwordMatch = 'The password does not match'
+                }
+            })
+            .catch(error => {
+                if(error.response.status == 422) {
+                    if(this.user.password != this.user.passwordConfirm) {
+                        this.passwordMatch = 'The password does not match'
+                    }
+                    this.errors = error.response.data.errors
+                }
+            })
         }
     }
 }

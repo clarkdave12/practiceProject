@@ -1,10 +1,14 @@
 <template>
     <div class="container py-3 px-4 d-flex justify-content-center">
+        
         <div class="form-group py-3 px-3">
             <div class="mb-4">
                 <h5>Login</h5>
             </div>
             <form @submit.prevent="login()">
+                <div v-if="hasError" class="error mb-4">
+                    {{ errorMessage }}
+                </div>
                 <label>Email</label>
                 <input v-model="email" type="text" placeholder="example@email.com" class="form-control mb-4">
 
@@ -24,7 +28,9 @@ export default {
     data () {
         return {
             email: '',
-            password: ''
+            password: '',
+            hasError: false,
+            errorMessage: 'Invalid Email or Password'
         }
     },
 
@@ -52,7 +58,7 @@ export default {
                                 authUser.name = response.data.name
                                 authUser.email = response.data.email
                                 window.localStorage.setItem('user', JSON.stringify(authUser))
-
+                                this.hasError = false
                                 this.$router.push('/home')
                             })
                             .catch(error => {
@@ -61,7 +67,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log(error)
+                    this.hasError = true
                 })
         }
     }

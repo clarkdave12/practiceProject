@@ -3,7 +3,6 @@ import App from './App.vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import routes from './routes'
-
 import {registerURL, loginURL, getHeader, userURL, isAuth} from './config'
 
 window.registerURL = registerURL
@@ -12,7 +11,6 @@ window.getHeader = getHeader
 window.userURL = userURL
 window.isAuth = isAuth
 window.axios = axios
-
 
 Vue.use(VueRouter)
 
