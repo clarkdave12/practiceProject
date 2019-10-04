@@ -59,6 +59,7 @@ export default {
                                 authUser.email = response.data.email
                                 window.localStorage.setItem('user', JSON.stringify(authUser))
                                 this.hasError = false
+                                bus.$emit('loggedIn')
                                 this.$router.push('/home')
                             })
                             .catch(error => {
@@ -100,5 +101,9 @@ export default {
         color: #ffffff;
         background: #77a6f7;
         border-radius: 5px;
+    }
+
+    .error {
+        color: #DC143C;
     }
 </style>

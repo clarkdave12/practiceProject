@@ -106,4 +106,8 @@ export default {
         background: #77a6f7;
         border-radius: 5px;
     }
+
+    .error {
+        color: #DC143C;
+    }
 </style>

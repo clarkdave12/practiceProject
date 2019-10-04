@@ -5,14 +5,17 @@ import Register from './pages/Register';
 export default [
     {
         path: '/home',
-        component: Home
+        component: Home,
+        meta: { forUser: true }
     },
     {
         path: '/login',
-        component: Login
+        component: Login,
+        meta: { forVisitor: true }
     },
     {
         path: '/register',
-        component: Register
+        component: Register,
+        meta: { forVisitor: true }
     }
 ]

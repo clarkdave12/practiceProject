@@ -12,6 +12,10 @@ import navbar from './includes/Navbar';
 export default {
   components: {
     navbar
+  },
+
+  created () {
+    bus.$emit('loggedIn')
   }
 }
 </script>
