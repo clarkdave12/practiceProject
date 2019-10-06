@@ -6,6 +6,9 @@
                     <router-link to="/sections" class="nav-link"> Sections </router-link>
                 </li>
                 <li class="nav-item">
+                    <router-link to="/subjects" class="nav-link"> Subjects </router-link>
+                </li>
+                <li class="nav-item">
                     <router-link to="/students" class="nav-link"> Students </router-link>
                 </li>
             </ul>

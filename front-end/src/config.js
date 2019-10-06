@@ -4,6 +4,7 @@ export const registerURL = apiDomain + '/api/register'
 export const loginURL = apiDomain + '/oauth/token'
 export const userURL = apiDomain + '/api/user'
 export const sectionURL = apiDomain + '/api/section'
+export const subjectURL = apiDomain + '/api/subject'
 
 export const getHeader = () => {
     const token = window.localStorage.getItem('access_token')

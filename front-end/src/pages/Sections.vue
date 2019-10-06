@@ -11,7 +11,10 @@
                     <div class="form-group">
                         <form @submit.prevent="addSection()">
                             <label>Section name</label>
-                            <input v-model="section.name" type="text" class="form-control mb-3">
+                            <input v-model="section.name" type="text" class="form-control">
+                            <div class="error mb-3">
+                                <span> {{ addErrors.name }} </span>
+                            </div>
 
                             <button class="btn btn-success" type="submit">Add</button>
                         </form>
@@ -29,10 +32,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <button @click="updateSection(sec.id, sec.name)"> Update </button>
-                     <button @click="deleteSection(sec.id)"> Delete </button> -->   
-
+                
                 <div class="col-md-8 col d-flex justify-content-center">
                     <table class="table table-hover">
                         <thead class="thead-light">
@@ -47,7 +47,7 @@
                                 <td>
                                     <div class="row d-flex justify-content-center">
                                         <span class="mr-5">
-                                            <button class="btn btn-outline-primary">Update</button>
+                                            <button @click="updateSection(sec.id, sec.name)" class="btn btn-outline-primary">Update</button>
                                         </span>
                                         
                                         <span>
@@ -73,6 +73,13 @@ export default {
                 name: '',
                 user_id: ''
             },
+            addErrors: {
+                name: ''
+            },
+            updateErrors: {
+                name: ''
+            },
+
             sections: [],
 
             update: {
@@ -97,7 +104,7 @@ export default {
                     this.showSections()
                 })
                 .catch(error => {
-                    console.log(error)
+                    this.addErrors.name = error.response.data.errors.name[0]
                 })
         },
 
@@ -107,7 +114,6 @@ export default {
             axios.get(sectionURL + '/' + this.section.user_id)
                 .then(response => {
                     this.sections = response.data
-                    console.log(this.sections)
                 })
                 .catch(error => {
                     console.log(error)
@@ -126,7 +132,7 @@ export default {
                     this.update = {}
                 })    
                 .catch(error => {
-                    console.log(error)
+                    this.updateErrors.name = error.response.data.errors.name
                 })
         },
 

@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Section;
+use App\Subject;
 use App\User;
 
-class SectionsController extends Controller
+class SubjectsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        
+        //
     }
 
     /**
@@ -37,16 +37,17 @@ class SectionsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|max:10',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'code' => 'required|max:8',
+            'description' => 'required'
         ]);
 
-        $section = new Section();
-        $section->name = $request->name;
-        $section->user_id = $request->user_id;
-        $section->save();
+        $subject = new Subject();
+        $subject->code = $request->code;
+        $subject->description = $request->description;
+        $subject->user_id = $request->user_id;
 
-        return response()->json($request);
+        $subject->save();
     }
 
     /**
@@ -57,11 +58,9 @@ class SectionsController extends Controller
      */
     public function show($id)
     {
-        /* $sections = Section::where('user_id', $id)->get(); */
-
         $user = User::find($id);
-
-        return response()->json($user->sections);
+        
+        return response()->json($user->subjects);
     }
 
     /**
@@ -84,9 +83,17 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $section = Section::find($id);
-        $section->name = $request->name;
-        $section->save();
+        $this->validate($request, [
+            'code' => 'required|max:10',
+            'description' => 'required',
+        ]);
+
+        $subject = Subject::find($id);
+        $subject->code = $request->code;
+        $subject->description = $request->description;
+        $subject->save();
+
+        return 'updated';
     }
 
     /**
@@ -97,7 +104,10 @@ class SectionsController extends Controller
      */
     public function destroy($id)
     {
-        $section = Section::find($id);
-        $section->delete();
+        $subject = Subject::find($id);
+
+        $subject->delete();
+
+        return 'deleted';
     }
 }

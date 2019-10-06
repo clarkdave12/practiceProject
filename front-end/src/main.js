@@ -3,8 +3,9 @@ import App from './App.vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import {registerURL, loginURL, getHeader, userURL, isAuth, sectionURL} from './config'
+import {registerURL, loginURL, getHeader, userURL, isAuth, sectionURL, subjectURL} from './config'
 
+window.subjectURL = subjectURL
 window.sectionURL = sectionURL
 window.registerURL = registerURL
 window.loginURL = loginURL
