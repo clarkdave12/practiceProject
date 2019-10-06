@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h1>home</h1>
+    <div class="container"> 
+        <home-navbar></home-navbar>
     </div>    
 </template>
-

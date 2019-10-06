@@ -3,8 +3,9 @@ import App from './App.vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import {registerURL, loginURL, getHeader, userURL, isAuth} from './config'
+import {registerURL, loginURL, getHeader, userURL, isAuth, sectionURL} from './config'
 
+window.sectionURL = sectionURL
 window.registerURL = registerURL
 window.loginURL = loginURL
 window.getHeader = getHeader
@@ -17,6 +18,7 @@ Vue.use(VueRouter)
 window.bus = new Vue()
 
 Vue.component('main-app', require('./App.vue').default)
+Vue.component('home-navbar', require('./includes/HomeNavbar.vue').default)
 
 const router = new VueRouter({
     mode: 'history',
